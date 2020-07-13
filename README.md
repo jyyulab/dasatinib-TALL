@@ -1,4 +1,4 @@
-# dasatinib-TALL
+# Network-based systems pharmacology identifies heterogeneity in LCK and BCL2 signaling and differential vulnerability of T-ALL to targeted therapy. 
 ## Overview
 
 ![Dasatinib project
