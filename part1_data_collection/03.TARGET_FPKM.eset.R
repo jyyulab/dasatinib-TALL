@@ -1,0 +1,43 @@
+#!/usr/bin/env Rscript
+##prepare TARGET expression eset
+##Coded by Jingjing Liu(Jingjing.liu@stjude.org)
+##R version 3.6.3 (2020-02-29)
+
+#####0.load packages#####
+rm(list = ls())
+require(NetBID2)
+require(dplyr)
+setwd("./DATA/TARGET")
+source("./utility.R")
+
+#####1.load matrix#####
+res_dir<-("../../resem_result_path")
+phe_info<-read.xlsx("./phe_info.xlsx")
+phe_info<-phe_info[phe_info$original_group=="TARGET",]
+
+choose_format<-"FPKM"
+choose_level<-"gene"
+sample_names<-phe_info$sampleID
+out_mat<-rsem2matrix(res_dir = res_dir,choose_format = choose_format,choose_level = choose_level,sample_names = sample_names)
+
+#####2.generate eset#####
+exp_mat<-out_mat[,-1]
+exp_mat<-apply(exp_mat,2,as.numeric)
+rownames(exp_mat)<-out_mat$gene
+rownames(phe_info)<-phe_info$sampleID
+eset<-NetBID2::generate.eset(exp_mat = exp_mat,phenotype_info=phe_info)
+TARGET_FPKM.eset<-eset
+
+exprs(eset)<-log2(exprs(eset)+0.1)
+TARGET_log2FPKM.eset<-eset
+#####3.QC#####
+draw.eset.QC(TARGET_FPKM.eset, outdir = "./QC", do.logtransform = FALSE, prefix = 'TARGET_FPKM_',
+             intgroup = "condition", choose_plot = c("heatmap", "pca", "density", "correlation", "meansd"), generate_html = TRUE, correlation_strategy = "pearson", plot_all_point = FALSE,
+             emb_plot_type='2D.text' # "2D", "2D.interactive", "2D.ellipse", "2D.text" or "3D" 
+)
+draw.eset.QC(TARGET_log2FPKM.eset, outdir = "./QC", do.logtransform = FALSE, prefix = 'TARGET_log2FPKM_',
+             intgroup = "condition", choose_plot = c("heatmap", "pca", "density", "correlation", "meansd"), generate_html = TRUE, correlation_strategy = "pearson", plot_all_point = FALSE,
+             emb_plot_type='2D.text' # "2D", "2D.interactive", "2D.ellipse", "2D.text" or "3D" 
+)
+#save data
+save(TARGET_FPKM.eset,TARGET_log2FPKM.eset,file = "./TARGET_esets")
