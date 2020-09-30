@@ -83,24 +83,24 @@ networks were merged into one.
 -----
 
 
-There are five major analysis steps included in this section: 1.Infer activity; 2.Master regulator exploring; 3.Biomarker score calculation; 4.Survival and Development stage analysis; 5.PDX scRNA-seq analysis.  
+There are five major analysis steps included in this section: 1.Infer activity; 2.Driver exploring; 3.Biomarker score calculation; 4.Survival and Development stage analysis; 5.PDX scRNA-seq analysis.  
 
 1. Infer activity    
 
-	-We inferred master regulator activity in Discovery, Validation, TARGET cohorts by T-ALL netowrk.   
-	-After ID conversion, master regulator activity was calculated in mouse dataset by T-ALL network.  
+	-We inferred driver activity in Discovery, Validation, TARGET cohorts by T-ALL netowrk.   
+	-After ID conversion, driver activity was calculated in mouse dataset by T-ALL network.  
 	-We used human kinase-substrate data base to infer kinase activity in PDX phosphoproteomic data.  
 	* See scripts: 1.1.calculateActivity_Discovery.R, 1.2.calculateActivity_TARGET.R, 1.3.calculateActivity_combined.R, 1.4.calculateActivity_GSE15907.R and 1.5.calculateActivity_phospho.R  
 
-2. Master regulator exploring    
+2. Driver exploring    
 
-	-Master regulators that affact Dasatinib sensitivity in T-ALL were explored in Discovery cohort.  
+	-Drivers that affact Dasatinib sensitivity in T-ALL were explored in Discovery cohort.  
 	-Kinases that changed activity after Dasatinib treatment in PDX samples were identified by using phosphoproteomic data. 
 	* See scripts: 2.1.masterTable_Discovery.R and 2.2.masterTable_phospho_kinaseAC.R    
 
 3. Biomarker score calculation  
-	-Dasatinib sensitivity related master regulators were selected by integrating knowledge based dasatinib targets, preTCR pathway genes and Network analysis based top driver genes.  
-	-Selected sensitivity related master regulator activities were summarized into one dasatinib sensitivity biomarker score.  
+	-Dasatinib sensitivity related drivers were selected by integrating knowledge based dasatinib targets, preTCR pathway genes and Network analysis based top driver genes.  
+	-Selected sensitivity related driver activities were summarized into one dasatinib sensitivity biomarker score.  
 	-Biomarker score were calculated in Discovery, Validationa and TAREGET cohorts.  
 	* See script: 3.1.get30biomarker_score.R  
 
@@ -112,7 +112,7 @@ There are five major analysis steps included in this section: 1.Infer activity; 
 
 5. scRNA-seq with PDX samples  
 	-We applied MICA algorithm to cluster PDX cells treated with or without dasatinib.  
-	-Master regulator activities were inferred by T-ALL network.  
+	-Driver activities were inferred by T-ALL network.  
 	-Different development stages of each cluster was predicted by examining gene expression signatures of ETP or DN3/DN4 stages. 
 	
 -----
